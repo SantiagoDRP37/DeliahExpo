@@ -11,34 +11,35 @@ CREATE TABLE `usuarios` (											-- creacion de tabla de usuarios
   `telefono` INT NOT NULL,
   `contrasenea` VARCHAR(45) NOT NULL,
   `tipoUser` boolean NOT NULL,
-  PRIMARY KEY (`idusuario`));
+  constraint usuario_id_pk primary key (`idusuario`));
   
   CREATE TABLE `platos`(
   `idPlato` INT NOT NULL AUTO_INCREMENT,																																																																																																																																																																																																																										
   `nombre`  VARCHAR(45) NOT NULL,
   `precio` DOUBLE NOT NULL,
-  `Foto` BLOB NOT NULL,
-  PRIMARY KEY (`idPlato`));
+  `Foto` VARCHAR(200) NOT NULL,
+   constraint platos_id_pk primary key (`idPlato`)); 
   
   create table `pedidos`(
    `idPedido` INT  NOT NULL AUTO_INCREMENT,
    `estado`	VARCHAR(45) NOT NULL,
-   `fecha` DATE NOT NULL,
+   `fecha` DATETIME NOT NULL,
    `descripcion` VARCHAR(45) NOT NULL,
    `formaDePago` VARCHAR(45) NOT NULL,
-   PRIMARY KEY (`idPedido`)
-  );
+    constraint pedidos_id_pk primary key (`idPedido`));
+    
   -- tabla de relaciones muchos a muchos
-  CREATE TABLE `usuarios_platos`(
+  CREATE TABLE `platos_favoritos`(
 	`usuario_id` int  NOT NULL,
-	FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`idusuario`)
+	constraint platosFav_usuario_id_fk foreign key (`usuario_id`) REFERENCES `usuarios` (`idusuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 	`plato_id` int not null,
-    foreign key (`plato_id`) references `deli`.`platos`(`idPlato`)
+    constraint platosFav_plato_id_fk foreign key (`plato_id`) references `platos`(`idPlato`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
    );
+   
     CREATE TABLE `pedidos_platos`(
 	`pedidos_id` int  NOT NULL,
 	FOREIGN KEY (`pedidos_id`) REFERENCES `deli`.`pedidos` (`idPedido`)
@@ -49,14 +50,78 @@ CREATE TABLE `usuarios` (											-- creacion de tabla de usuarios
     ON DELETE CASCADE
     ON UPDATE CASCADE
    );
-    CREATE TABLE `pedidos_usuarios`(
-	`pedidos_id` int  NOT NULL,
-	FOREIGN KEY (`pedidos_id`) REFERENCES `deli`.`pedidos` (`idPedido`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-	`usuario_id` int  NOT NULL,
-	FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`idusuario`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-   );
-    insert into usuarios (userNick,nombre,apellido,correo,telefono,contrasenea,tipoUser)values ("alfa","david","rojas","santix37@hotmail.com",7410118,"contrasenea",0)
+   -- Poblar tablas
+   -- Poblar tabla de usuario
+   
+	insert into usuarios (userNick,nombre,apellido,correo,telefono,contrasenea,tipoUser)
+		values 
+			("alfa",
+			"david",
+			"rojas",
+			"santix37@hotmail.com",
+			7410118,
+			"contrasenea"
+			,1);
+	insert into usuarios (userNick,nombre,apellido,correo,telefono,contrasenea,tipoUser)
+		values 
+			("luigi",
+			"Luis",
+			"Peres",
+			"luisMaster@hotmail.com",
+			789456,
+			"pudin123"
+			,0);
+	insert into usuarios (userNick,nombre,apellido,correo,telefono,contrasenea,tipoUser)
+		values 
+			("mario",
+			"mario",
+			"bros",
+			"marioBros@hotmail.com",
+			75315964,
+			"chocolate23"
+			,0);
+            
+
+ insert into platos (nombre,precio,Foto)
+		values 
+			("Porcion Pizza",
+			4300,
+			"https://img.freepik.com/foto-gratis/rebanada-pizza-caliente-queso-derretido_34936-282.jpg?size=626&ext=jpg");
+ 
+ insert into platos (nombre,precio,Foto)
+		values 
+			("Lasagña",
+			8000,
+			"https://res.cloudinary.com/mundo/image/upload/c_crop,h_3228,w_5738,x_192,y_0/h_409,w_727/v1564406376/lasagna_gf1zpi.jpg");
+ 
+  insert into platos (nombre,precio,Foto)
+		values 
+			("Cocacola",
+			2000,
+			"https://mercaldas.vteximg.com.br/arquivos/ids/157452-1300-1300/62748.jpg?v=636918829628970000");
+            
+ -- Poblar tabla de pedidos
+ insert into pedidos (estado,fecha,descripcion,formaDePago)
+		values 
+			("Recibido",
+			now(),
+			"1 Pizza de carner",
+            "efectivo");
+insert into pedidos (estado,fecha,descripcion,formaDePago)
+		values 
+			("preparando",
+			now(),
+			"1 lasagña",
+            "tarjeta");
+insert into pedidos (estado,fecha,descripcion,formaDePago)
+		values 
+			("entregado",
+			now(),
+			" 2 cocacola",
+            "efectivo");
+ -- Poblar tabla de pedidos_platos
+ insert into pedidos_platos (pedidos_id,plato_id)
+		values 
+			(1,1),
+            (2,3),
+            (3,2);
