@@ -38,5 +38,7 @@ Para probar los endpoints desde postman debes importar la coleccion del reposito
 
 ## Documentacion
 La documentacion de la API se encuentra en el archivo `openapi.yaml`, si deeamos visialuzarla debemos ingresar a la siguiente pagina web:
+
 `https://editor.swagger.io/#`
+
 Y copiar la informacion del archivo `openapi.yaml` en la columna izquierda.
