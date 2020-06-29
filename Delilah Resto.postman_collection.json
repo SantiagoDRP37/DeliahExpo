@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "860fef77-85b8-4041-b008-e0d9ab3e12bd",
+		"name": "Delilah Resto",
+		"description": "Api para administras pedidos de comida, platos entre el restaurante y el cliente",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "crear usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"kurtvile\",\r\n  \"password\": \"pretty_pimpin\",\r\n  \"email\": \"kurtvile@gmail.com\",\r\n  \"delivery_address\": \"Bassackwards 999\",\r\n  \"full_name\": \"Kurt Vile\",\r\n  \"phone\": 9753197531\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3500/Usuario/Registrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Usuario",
+						"Registrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3500/Usuario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Plato",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"perro\",\r\n    \"precio\": 2500,\r\n    \"foto\": \"https://images-gmi-pmc.edge-generalmills.com/f5a517df-12c8-4d55-aa70-c882d99122e0.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3500/Platos/Crear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Platos",
+						"Crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Platos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3500/Platos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Platos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Plato por ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPlato\": 5,\r\n    \"nombre\": \"perro\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3500/Platos/EiminarPorId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Platos",
+						"EiminarPorId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Pedidos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3500/Pedidos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Pedidos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Pedido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"descripcion\": \"Pizza de carner\",\r\n     \"formaDePago\": \"efectivo\",\r\n     \"id_usuario\": \"2\",\r\n     \"idPlato\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3500/Pedido/Crear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Pedido",
+						"Crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Pedido por ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPedido\": \"3\",\r\n    \"id_usuario\": \"3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3500/Pedido/EiminarPorId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Pedido",
+						"EiminarPorId"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
