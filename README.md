@@ -3,7 +3,18 @@ Tercer proyecto del curos Desarrollo WEB full Stack de Acámica.
 
 ## Requisitos
     - Node.js
+    - NPM (gestor de paquete de datos)
     - MySQL
-    - Postman para manejo de endpoints y testing
-    - Swagger para documentación de API
+    - Postman (manejo de endpoints y testing)
+    - Swagger (documentación de API)
  ### Instalacion 
+    Clonar o Descargar el repositorio desde: (https://github.com/SantiagoDRP37/DeliahExpo).
+
+    Comando desde la consola:
+    
+        -git clone https://github.com/SantiagoDRP37/DeliahExpo.
+ ### Instalar dependencias
+    debemos abrir carpeta de nuestro crepocitorio y realizar el siguiente comando:
+        ```
+        npm install
+        ```
