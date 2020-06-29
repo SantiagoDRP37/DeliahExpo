@@ -7,7 +7,7 @@ Tercer proyecto del curos Desarrollo WEB full Stack de Acámica.
 - MySQL
 - Postman (manejo de endpoints y testing)
 - Swagger (documentación de API)
-### Instalacion:
+## Instalacion:
 Clonar o Descargar el repositorio desde: (https://github.com/SantiagoDRP37/DeliahExpo).
 
 Comando desde la consola:
