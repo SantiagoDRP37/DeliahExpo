@@ -26,10 +26,12 @@ CREATE TABLE `usuarios` (											-- creacion de tabla de usuarios
    `fecha` DATETIME NOT NULL,
    `descripcion` VARCHAR(45) NOT NULL,
    `formaDePago` VARCHAR(45) NOT NULL,
-    constraint pedidos_id_pk primary key (`idPedido`));
+   `id_usuario` INT NOT NULL,
+    constraint pedidos_id_pk primary key (`idPedido`),
+    constraint usuario_id_fk foreign key (`id_usuario`) references `usuarios`( `idusuario`));
     
   -- tabla de relaciones muchos a muchos
-  CREATE TABLE `platos_favoritos`(
+  /*CREATE TABLE `platos_favoritos`(
 	`usuario_id` int  NOT NULL,
 	constraint platosFav_usuario_id_fk foreign key (`usuario_id`) REFERENCES `usuarios` (`idusuario`)
     ON DELETE CASCADE
@@ -39,8 +41,9 @@ CREATE TABLE `usuarios` (											-- creacion de tabla de usuarios
     ON DELETE CASCADE
     ON UPDATE CASCADE
    );
-   
+   */
     CREATE TABLE `pedidos_platos`(
+    `id_pedidos_platos` INT NOT NULL AUTO_INCREMENT,
 	`pedidos_id` int  NOT NULL,
 	FOREIGN KEY (`pedidos_id`) REFERENCES `deli`.`pedidos` (`idPedido`)
     ON DELETE CASCADE
@@ -48,7 +51,8 @@ CREATE TABLE `usuarios` (											-- creacion de tabla de usuarios
 	`plato_id` int not null,
     foreign key (`plato_id`) references `deli`.`platos`(`idPlato`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE
+    ON UPDATE CASCADE,
+    constraint pedidos_platos_id_pk primary key (`id_pedidos_platos`)
    );
    -- Poblar tablas
    -- Poblar tabla de usuario
@@ -101,24 +105,27 @@ CREATE TABLE `usuarios` (											-- creacion de tabla de usuarios
 			"https://mercaldas.vteximg.com.br/arquivos/ids/157452-1300-1300/62748.jpg?v=636918829628970000");
             
  -- Poblar tabla de pedidos
- insert into pedidos (estado,fecha,descripcion,formaDePago)
+ insert into pedidos (estado,fecha,descripcion,formaDePago,id_usuario)
 		values 
 			("Recibido",
 			now(),
 			"1 Pizza de carner",
-            "efectivo");
-insert into pedidos (estado,fecha,descripcion,formaDePago)
+            "efectivo",
+            1);
+insert into pedidos (estado,fecha,descripcion,formaDePago,id_usuario)
 		values 
 			("preparando",
 			now(),
 			"1 lasagña",
-            "tarjeta");
-insert into pedidos (estado,fecha,descripcion,formaDePago)
+            "tarjeta",
+            2);
+insert into pedidos (estado,fecha,descripcion,formaDePago,id_usuario)
 		values 
 			("entregado",
 			now(),
-			" 2 cocacola",
-            "efectivo");
+			" 1 cocacola",
+            "efectivo",
+            3);
  -- Poblar tabla de pedidos_platos
  insert into pedidos_platos (pedidos_id,plato_id)
 		values 
