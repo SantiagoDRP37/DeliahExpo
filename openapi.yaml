@@ -1,0 +1,435 @@
+openapi: 3.0.0
+info:
+  description: >-
+    Deliah express es un aun API para restaurantes que ayuda a gestionar los
+    pedidos de comida entre el restaurante y el cliente
+  version: 1.0.0
+  title: Deliah Express
+tags:
+  - name: Usuario
+    description: >-
+      Por medio de esta ruta podemos realizar varias acciones como crear un
+      nuevo usuario, obtener un listado de usuarios registrados
+  - name: Platos
+    description: >-
+      Por medio de esta ruta podemos realizar varias acciones: crear nuevos
+      platos, modificar platos, eliminar platos
+  - name: Pedidos
+    description: >-
+      Por medio de esta ruta podemos realizar varias acciones: crear nuevos
+      pedidos, modificar el estado de los pedidos, eliminar pedidos
+paths:
+  /Login:
+    post:
+      tags:
+        - Login
+      summary: Autenticar un usuario
+      description: Permite autenticar a un usuario.
+      parameters: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userNick:
+                  type: string
+                  description: nick de usuario
+                  example: luigi
+                contraseña:
+                  type: string
+                  description: contraseña del usuario
+                  example: pudin123
+      responses:
+        '200':
+          description: Usuario logueado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjowLCJpYXQiOjE1OTM1ODIxMjB9.nFcHdWliV-7S1i3RQ88COidnDVoCgJ2xEefK2zWlpQs
+        '400':
+          description: Peticion sin exito
+          content:
+            aplication/json:
+              schema:
+                type: string
+                example:
+                  Usuario o contraseña incorrecta.: null
+  /Usuario:
+    get:
+      tags:
+        - Usuario
+      summary: Retorna un listado de los usuarios registrados
+      description: ''
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA
+      responses:
+        '200':
+          description: Exito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/usuario'
+        '401':
+          description: eacceso denegado
+  /Usuario/Registrar:
+    post:
+      tags:
+        - Usuario
+      summary: Crear un nuevo usuario
+      description: Permite crear usuarios en la base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/usuario'
+      responses:
+        '201':
+          description: usuario creado
+        '400':
+          description: El usuario ya existe en la base de datos
+  /Platos:
+    get:
+      tags:
+        - Platos
+      summary: retorna un listado de los platos
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA
+      responses:
+        '200':
+          description: Peticion exitosa
+          content:
+            aplication/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/platos'
+        '401':
+          description: error al validar token
+  /Platos/Crear:
+    post:
+      tags:
+        - Platos
+      summary: Crea un nuevo plato
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjowLCJpYXQiOjE1OTM1NzI4NzF9.IpsFcgA65Ll9-0zTGExYl9PApmjvzF-DEJKehv5f-wQ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/platos'
+      responses:
+        '201':
+          description: Plato creado
+        '401':
+          description: error al validar token
+  /Platos/ModificarPorId:
+    patch:
+      tags:
+        - Platos
+      summary: modifica un plato existente
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjowLCJpYXQiOjE1OTM1NzI4NzF9.IpsFcgA65Ll9-0zTGExYl9PApmjvzF-DEJKehv5f-wQ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                properties:
+                  idPlato:
+                    type: integer
+                    example: 1
+                  variable:
+                    type: string
+                    example: foto
+                  valor:
+                    type: string
+                    example: >-
+                      https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT94u4dKti3la30dEPOb2byvmW6wFRfUMpsCQ&usqp=CAU
+      responses:
+        '201':
+          description: plato modificado
+        '400':
+          description: El proiedad de plato no encontrada"
+        '404':
+          description: plato no encontrado
+  /Platos/EliminarPorId:
+    delete:
+      tags:
+        - Platos
+      summary: Elimina un plato existente
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjowLCJpYXQiOjE1OTM1NzI4NzF9.IpsFcgA65Ll9-0zTGExYl9PApmjvzF-DEJKehv5f-wQ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                properties:
+                  idPlato:
+                    type: integer
+                    example: 4
+                  nombre:
+                    type: string
+                    example: perro
+      responses:
+        '204':
+          description: operacion exitosa
+        '400':
+          description: El plato no existe en la base de datos
+  /Pedidos:
+    get:
+      tags:
+        - Pedidos
+      summary: obtineun listado de pedidos existente
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjowLCJpYXQiOjE1OTM1NzI4NzF9.IpsFcgA65Ll9-0zTGExYl9PApmjvzF-DEJKehv5f-wQ
+      responses:
+        '200':
+          description: Peticion exitosa
+          content:
+            aplication/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/pedidos'
+  /Pedidos/Crear:
+    post:
+      tags:
+        - Pedidos
+      summary: Crea un pedido
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                descripcion:
+                  type: string
+                  example: pizza de carne
+                formaDePago:
+                  type: string
+                  example: efectivo
+                id_usuario:
+                  type: integer
+                  example: 2
+                idPlato:
+                  type: integer
+                  example: 1
+      responses:
+        '201':
+          description: pedido Creado
+        '400':
+          description: el usuario no existe
+        '500':
+          description: el pedido no ha pidido ser creado
+  /Pedidos/ModificarPorId:
+    patch:
+      tags:
+        - Pedidos
+      summary: Modifica el estado del pedido
+      description: ''
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                properties:
+                  idPedido:
+                    type: integer
+                    example: 3
+                  estado:
+                    type: string
+                    example: preparando
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: el pedido no existe
+  /Pedidos/EliminarPorId:
+    delete:
+      tags:
+        - Pedidos
+      summary: Elimina un pedido
+      description: ''
+      parameters:
+        - name: Authorization
+          in: header
+          description: Debe poner el token entregado por el login
+          required: true
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: >-
+                  Bearer
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                properties:
+                  idPedido:
+                    type: integer
+                    example: 3
+                  estado:
+                    type: string
+                    example: preparando
+      responses:
+        '200':
+          description: oepracion exitosa
+        '400':
+          description: la orden no existe en la base de datos
+  schemas:
+    usuario:
+      properties:
+        id_usuario:
+          type: integer
+          example: 1
+        nickUser:
+          type: string
+          example: davidT23
+        nombre:
+          type: string
+          example: David
+        apellido:
+          type: string
+          example: Torres
+        telefono:
+          type: integer
+          example: 123456789
+        correo:
+          type: string
+          example: davidTorre@yahoo.com
+        contrasenia:
+          type: string
+          example: 'contrasenia{3245}'
+        tipoUser:
+          type: boolean
+          example: 0
+    platos:
+      properties:
+        id_plato:
+          type: integer
+          example: 1
+        nombre:
+          type: string
+          example: Porcion de Pizza
+        precio:
+          type: integer
+          example: 4300
+        foto:
+          type: string
+          example: >-
+            https://images-gmi-pmc.edge-generalmills.com/f5a517df-12c8-4d55-aa70-c882d99122e0.jpg
+    pedidos:
+      properties:
+        id_pedido:
+          type: integer
+          example: 1
+        estado:
+          type: string
+          example: Preparando
+        fecha:
+          type: string
+          example: '2020-06-30 23:03:45'
+        descripcion:
+          type: string
+          example: pizza sin piña
+        precio_pedido:
+          type: integer
+          example: 4300
+        forma_pago:
+          type: string
+          example: Efectivo

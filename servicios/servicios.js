@@ -160,7 +160,7 @@ server.delete("/Platos/EiminarPorId",autenticarUsuario,autenticarRolAdmin,(req,r
            const eliminar = await sequelize.query(query,{replacements:{
               idPlato,
               nombre}});
-              res.sendStatus(204);
+              res.sendStatus(204).json("operacion exitosa");;
         } else {
           res.statusCode = 400;
           res.send('El plato no existe en la base de datos');
@@ -180,7 +180,7 @@ server.patch("/Plato/ModificarPorId",autenticarUsuario,autenticarRolAdmin,(req,r
     if (resultados.length > 0){
       // variable
       if (!variable){
-        res.statusCode = 404;
+        res.statusCode = 400;
           res.json({ error: "El proiedad de plato no encontrada"});
       }else if(variable=="nombre"){
         query = ` UPDATE platos SET nombre = :valor where idPlato = :idPlatoQUERY;`;
@@ -188,21 +188,23 @@ server.patch("/Plato/ModificarPorId",autenticarUsuario,autenticarRolAdmin,(req,r
           idPlatoQUERY: idPlato,
           valor
           }});
-          res.sendStatus(201);
+          res.status(201).json("plato modificado");
+          
       }else if(variable=="precio"){
         query = ` UPDATE platos SET precio = :valor where idPlato = :idPlatoQUERY;`;
         const updatePlato_nombre = await sequelize.query(query,{replacements:{
           idPlatoQUERY: idPlato,
           valor
           }});
-          res.sendStatus(201);
+          res.status(201).json("plato modificado");
+          
       }else{
         query = ` UPDATE platos SET foto = :valor where idPlato = :idPlatoQUERY;`;
         const updatePlato_nombre = await sequelize.query(query,{replacements:{
           idPlatoQUERY: idPlato,
           valor
           }});
-          res.sendStatus(201);
+          res.status(201).json("plato modificado");
       }
      
     }else{
@@ -234,7 +236,7 @@ server.post("/Pedido/Crear",autenticarUsuario,(req,res,next)=>{
     sequelize.authenticate().then(async()=>{
       
       if(!id_usuario){
-          res.statusCode = 404;
+          res.statusCode = 400;
           res.json({ error: "El usuario no existe"})
         } else {
           try {
@@ -258,7 +260,7 @@ server.post("/Pedido/Crear",autenticarUsuario,(req,res,next)=>{
 
             res.status(201).json("pedido creado");
           } catch (error) {
-            res.statusCode = 404;
+            res.statusCode = 500;
             res.json({ error: "El pedido no pudo ser creado"});
             next(error);
           }
@@ -283,8 +285,7 @@ server.delete("/Pedido/EiminarPorId",autenticarUsuario,autenticarRolAdmin,(req,r
            const eliminar = await sequelize.query(query,{replacements:{
               idPedido,
               id_usuario,type: sequelize.QueryTypes.delete}});
-              res.sendStatus(204);
-              res.send('');
+              res.sendStatus(204).json("oepracion exitosa");
         } else {
           res.statusCode = 400;
           res.send('la orden no existe en la base de datos');
@@ -308,7 +309,7 @@ server.patch("/Pedido/ModificarPorId",autenticarUsuario,autenticarRolAdmin,(req,
         }});
         res.sendStatus(200);
     }else{
-      res.statusCode = 404;
+      res.statusCode = 400;
           res.json({ error: "El pedido no existe"})
     }
   });
