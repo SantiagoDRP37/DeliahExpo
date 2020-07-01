@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"username\": \"kurtvile\",\r\n  \"password\": \"pretty_pimpin\",\r\n  \"email\": \"kurtvile@gmail.com\",\r\n  \"delivery_address\": \"Bassackwards 999\",\r\n  \"full_name\": \"Kurt Vile\",\r\n  \"phone\": 9753197531\r\n}",
+					"raw": "  {\r\n    \"userNick\": \"tanos\",\r\n    \"nombre\": \"jesus\",\r\n    \"apellido\": \"torres\",\r\n    \"correo\": \"kartus@hotmail.com\",\r\n    \"telefono\": 8131554,\r\n    \"contrasenea\": \"secreto\",\r\n    \"tipoUser\": 0\r\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -39,7 +39,13 @@
 			"name": "Obtener Usuarios",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "http://localhost:3500/Usuario",
 					"protocol": "http",
@@ -58,7 +64,13 @@
 			"name": "Crear Plato",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"nombre\": \"perro\",\r\n    \"precio\": 2500,\r\n    \"foto\": \"https://images-gmi-pmc.edge-generalmills.com/f5a517df-12c8-4d55-aa70-c882d99122e0.jpg\"\r\n}",
@@ -87,7 +99,13 @@
 			"name": "Obtener Platos",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjowLCJpYXQiOjE1OTM1NzI4NzF9.IpsFcgA65Ll9-0zTGExYl9PApmjvzF-DEJKehv5f-wQ",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "http://localhost:3500/Platos",
 					"protocol": "http",
@@ -106,10 +124,16 @@
 			"name": "Eliminar Plato por ID",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"idPlato\": 5,\r\n    \"nombre\": \"perro\"\r\n}",
+					"raw": "{\r\n    \"idPlato\": 4,\r\n    \"nombre\": \"perro\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -135,7 +159,13 @@
 			"name": "Obtener Pedidos",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "http://localhost:3500/Pedidos",
 					"protocol": "http",
@@ -154,7 +184,13 @@
 			"name": "Crear Pedido",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjowLCJpYXQiOjE1OTM1NzMxNzh9.kOJkOtOJh2qvgU1w-UKaVPETkEkDsWK81y07VAADYiw",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n     \"descripcion\": \"Pizza de carner\",\r\n     \"formaDePago\": \"efectivo\",\r\n     \"id_usuario\": \"2\",\r\n     \"idPlato\": \"1\"\r\n}",
@@ -183,7 +219,13 @@
 			"name": "Eliminar Pedido por ID",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"idPedido\": \"3\",\r\n    \"id_usuario\": \"3\"\r\n}",
@@ -203,6 +245,104 @@
 					"path": [
 						"Pedido",
 						"EiminarPorId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Pedido Por ID",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPedido\": \"1\",\r\n    \"estado\": \"preaparando\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3500/Pedido/ModificarPorId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Pedido",
+						"ModificarPorId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Por ID",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xpIjoxLCJpYXQiOjE1OTM1NzQ1NTZ9.-96E1HZQQxUj3aoj1V0zA3cstE3qe74hB1prKoVGpmA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPlato\": 1,\r\n    \"variable\": \"foto\",\r\n    \"valor\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT94u4dKti3la30dEPOb2byvmW6wFRfUMpsCQ&usqp=CAU\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3500/Plato/ModificarPorId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Plato",
+						"ModificarPorId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userNick\":\"luigi\",\r\n    \"contrasenea\": \"pudin123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3500/Login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"Login"
 					]
 				}
 			},

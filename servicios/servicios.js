@@ -10,23 +10,36 @@ server.get("/",(req,res)=>{
     res.send("Delilah Restó Api");
 });
 //autenticacion
- const fima = 'estoEsmuySeguro123';
-
-function verficarTokenAdmin(req,res,next){
+ const firma = 'estoEsmuySeguro123';
+//autenticar usuario
+function autenticarUsuario(req,res,next){
   try {
-    const token = req.headears.authorization.split(' ')[1];
-    const descoficado = jwt.verify(token,firma);
-    console.log("aaa"+descoficado);
-    if (descoficado){
-      req.usuario = descoficado;
+    const token1 = req.headers.authorization.split(' ')[1];
+    const vericarToken = jwt.verify(token1, firma);
+    console.log(vericarToken);
+    if (vericarToken){
+      req.roles = vericarToken;
       next()
     }
   } catch (error) {
+    res.status(401);
     res.json({error: 'error al validar token'});
   }
   
 }
-
+//
+function autenticarRolAdmin(req,res,next){
+  let rol = req.roles.roli;
+  console.log("este es au: "+rol)
+  if (rol===1){
+    console.log("(admin)objeto es"+ rol);
+    rol = null,
+    next();
+  }else{
+    
+    res.send("acceso denegado");
+  }
+}
 //----------------Login----------------------
 server.post("/Login",(req,res)=>{
   const {
@@ -37,10 +50,11 @@ server.post("/Login",(req,res)=>{
 
       let query = `Select tipoUser FROM usuarios WHERE userNick = ${JSON.stringify(req.body.userNick)} AND contrasenea = ${JSON.stringify(req.body.contrasenea)}`;
       const resultados = await sequelize.query(query,{type: sequelize.QueryTypes.SELECT});
-      console.log(resultados);
+      
+     
       if(resultados.length > 0){
-        const token = jwt.sign({resultados},fima);
-        console.log("token: "+token);
+        const token = jwt.sign({roli: resultados[0].tipoUser},firma);
+        //console.log(token);
         res.json(token);
       }else{
         res.statusCode = 400;
@@ -51,11 +65,10 @@ server.post("/Login",(req,res)=>{
     
 });
 //----------------Usuarios----------------------
-server.get("/Usuario",verficarTokenAdmin,(req,res)=>{
+server.get("/Usuario",autenticarUsuario,autenticarRolAdmin,(req,res)=>{
     sequelize.authenticate().then(async()=>{
         const query = 'Select * FROM usuarios';
         const resultados = await sequelize.query(query,{type: sequelize.QueryTypes.SELECT});
-        console.log(resultados);
         res.json(resultados);
      });
       
@@ -95,7 +108,7 @@ server.post("/Usuario/Registrar",(req,res)=>{
 });
 
 //----------------Platos------------------------
-server.get("/Platos",(req,res)=>{
+server.get("/Platos",autenticarUsuario,(req,res)=>{
     sequelize.authenticate().then(async()=>{
         const query = 'Select * FROM platos';
         const resultados = await sequelize.query(query,{type: sequelize.QueryTypes.SELECT});
@@ -105,7 +118,7 @@ server.get("/Platos",(req,res)=>{
       
 });
 
-server.post("/Platos/Crear",(req,res)=>{
+server.post("/Platos/Crear",autenticarUsuario,autenticarRolAdmin,(req,res)=>{
     const {
         nombre,
         precio,
@@ -130,7 +143,7 @@ server.post("/Platos/Crear",(req,res)=>{
           }
      });
 });
-server.delete("/Platos/EiminarPorId",(req,res)=>{
+server.delete("/Platos/EiminarPorId",autenticarUsuario,autenticarRolAdmin,(req,res)=>{
   const {
       idPlato,
       nombre,
@@ -154,7 +167,7 @@ server.delete("/Platos/EiminarPorId",(req,res)=>{
         }
    });
 });
-server.patch("/Plato/ModificarPorId",(req,res)=>{
+server.patch("/Plato/ModificarPorId",autenticarUsuario,autenticarRolAdmin,(req,res)=>{
   const{
     idPlato,
     variable,
@@ -200,7 +213,7 @@ server.patch("/Plato/ModificarPorId",(req,res)=>{
  
 });
 //----------------Pedidos-----------------------
-server.get("/Pedidos",(req,res)=>{
+server.get("/Pedidos",autenticarUsuario,autenticarRolAdmin,(req,res)=>{
   sequelize.authenticate().then(async()=>{
       const query = 'Select * FROM pedidos';
       const resultados = await sequelize.query(query,{type: sequelize.QueryTypes.SELECT});
@@ -210,7 +223,7 @@ server.get("/Pedidos",(req,res)=>{
     
 });
 
-server.post("/Pedido/Crear",(req,res,next)=>{
+server.post("/Pedido/Crear",autenticarUsuario,(req,res,next)=>{
   const {
       descripcion,
       formaDePago,
@@ -253,7 +266,7 @@ server.post("/Pedido/Crear",(req,res,next)=>{
    });
 });
 
-server.delete("/Pedido/EiminarPorId",(req,res)=>{
+server.delete("/Pedido/EiminarPorId",autenticarUsuario,autenticarRolAdmin,(req,res)=>{
   const {
       idPedido,
       id_usuario,
@@ -269,15 +282,16 @@ server.delete("/Pedido/EiminarPorId",(req,res)=>{
 
            const eliminar = await sequelize.query(query,{replacements:{
               idPedido,
-              id_usuario}});
+              id_usuario,type: sequelize.QueryTypes.delete}});
               res.sendStatus(204);
+              res.send('');
         } else {
           res.statusCode = 400;
           res.send('la orden no existe en la base de datos');
         }
    });
 });
-server.patch("/Pedido/ModificarPorId",(req,res)=>{
+server.patch("/Pedido/ModificarPorId",autenticarUsuario,autenticarRolAdmin,(req,res)=>{
   const{
     idPedido,
     estado
