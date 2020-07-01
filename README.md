@@ -27,6 +27,14 @@ Debemos tener instalado un gestor de base de datos MySql y corriendo en puerto 3
 - Abrimos un navegador web con la siguiente direccion: http://localhost/phpmyadmin/server_sql.php
 - Podemos importar el archivo `CreacionDB.sql` que se encuentra en `DeliahExpo/DataBase/` que contiene las querias de creacion y poblacion de tablas
 
+### Conexion con la Base de datos
+El archivo de conexion con la base de datos es `DeliahExpo/DataBase/bdConexion.js`, donde los parametros por defecto de la conexion son los siguientes:
+- conf_db_host = "localhost" (Host)
+- conf_db_name = "deli" (Nombre de la base de datos)
+- conf_user = "root" (Usuario de la base)
+- conf_password = "" (Contraseña de la base)
+- conf_port = "3306" (Puerto de la base)
+
 ### Iniciar el servidor
 Abrir el archivo `DeliahExpo/Server/server.js` desde Node con el siguiente comando de terminal:
 ```
